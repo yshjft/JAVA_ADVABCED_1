@@ -121,3 +121,23 @@
   * 백그라운드에서 보조적인 역할 수행
   * 사용자 스레드가 종료되면 데몬 스레드는 자동으로 종료
 * 참고) run() 메서드 안에서는 CheckedException을 반드시 잡아야 한다. 밖으로 던질 수 없다. 
+
+### 스레드 생성 - Runnable
+* [예제] (src/thread/start/HelloRunnableMain.java 확인)
+
+#### Thread 상속 VS Runnable 구현
+* **Runnable 구현이 더 좋은 선택이다.**
+* Thread 상속
+  * 구현 간단
+  * BUT 상속 제한
+  * BUT 유연성 부족
+* Runnable 인터페이스 구현 방식
+  * 상속의 자유로움
+  * 코드 분리(스레드와 실행할 작업 분리)
+  * 여러 스레드가 동일한 Runnable 객체를 공유할 수 있어 자원 관리 효율적
+  * BUT 코드가 복잡해진다.
+    * Runnable 객체 추가하고 이를 Thread 객체로 전달해야하는 과정 추가됨
+
+### 여러 스레드 만들기
+* [예제1] (src/thread/start/ManyThreadMainV1.java 확인)
+* [예제2] (src/thread/start/ManyThreadMainV2.java 확인)
