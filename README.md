@@ -141,3 +141,18 @@
 ### 여러 스레드 만들기
 * [예제1] (src/thread/start/ManyThreadMainV1.java 확인)
 * [예제2] (src/thread/start/ManyThreadMainV2.java 확인)
+
+
+### Runnable을 만드는 다양한 방법
+#### 정적 중첩 클래스
+* [예제] src/thread/start/InnerRunnableMainV1.java 확인)
+
+#### 익명 클래스 사용
+* [예제] src/thread/start/InnerRunnableMainV2.java 확인)
+
+#### 익명 클래스 변수 없이 직접 전달
+* [예제] src/thread/start/InnerRunnableMainV3.java 확인)
+
+#### 람다
+* [예제] src/thread/start/InnerRunnableMainV4.java 확인)
+
