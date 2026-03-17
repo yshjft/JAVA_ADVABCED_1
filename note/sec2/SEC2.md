@@ -19,7 +19,7 @@
     * 단일 CPU(단일 CPU 코어)가 여러 작업을 동시에 수행하는 것처럼 보이게 하는 것
     * 소프트웨어 기반
 * 참고)
-    * ![img.png](note/image/sec002.png)
+    * ![img.png](image/sec002.png)
     * 여러 CPU 코어를 사용하기 때문에 멀티프로세싱이다. 동시에 각각의 단일 CPU 코어에 여러 작업을 분
       할해서 수행하기 때문에 멀티태스킹이다.
 
@@ -47,10 +47,10 @@
 
 ### 스레드와 스케줄링
 #### 단잌 코어 스케줄링
-![img_1.png](note/image/sec002_1.png)
+![img_1.png](image/sec002_1.png)
 
 #### 멀티 코어 스케줄링
-![img_2.png](note/image/sec002_2.png)
+![img_2.png](image/sec002_2.png)
 
 
 #### 프로세스, 스레드와 스케줄링

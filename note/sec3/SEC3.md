@@ -16,7 +16,7 @@
     * run() 메서드 재정의
     * 다만 run()을 직접 호출할 일은 절대 없다. start()에 의해 호출된다.
 * [예제] (src/thread/start/HelloThreadMain.java 확인)
-  ![img.png](note/image/sec003.png)
+  ![img.png](image/sec003.png)
     * main 스레드가 run() 메서드를 실행하는게 아니다.
         * main 스레드가 start()를 통해 Thread-0 스레드가 run()을 실행하도록 시킨다.
     * 스레드는 순서와 실행 기간을 모두 보장하지 않는다.
@@ -24,7 +24,7 @@
 ### 스레드 시작2
 #### start() vs run()
 * start() 대신에 재정의한 run() 메서드를 직접 호출하면?
-  ![img_1.png](note/image/sec003_1.png)
+  ![img_1.png](image/sec003_1.png)
     * main 스레드가 모든 것을 처리한다.
     *  별도의 스레드에서 재정의한 run() 메서드를 실행하려면, 반드시 start() 메서드를 호출해야 한다.
 
