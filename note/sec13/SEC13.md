@@ -18,3 +18,23 @@
   * 스레드 풀을 이용하여 1,2 번 문제 해결
   * Runnable 불편함 문제 해결
   * 생산자 소비자 문제 해결
+
+### ThreadPoolExecutor
+
+#### ThreadPoolExecutor
+* 생산자/소비자 패턴
+  * 생산자: es.execute(작업) 를 호출하는 스레드
+  * 소비자: 스레드 풀에 있는 스레드
+* 생성자
+  ```java
+  ExecutorService es = new ThreadPoolExecutor(2,2,0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+  ```
+  * corePoolSize : 스레드 풀에서 관리되는 기본 스레드의 수
+  * maximumPoolSize : 스레드 풀에서 관리되는 최대 스레드 수
+  * keepAliveTime, TimeUnit unit : 기본 스레드 수를 초과해서 만들어진 스레드가 생존할 수 있는 대기 시간(이 시간 동안 처리할 작업이 없다면 초과 스레드는 제거됨)
+  * BlockingQueue workQueue : 작업을 보관할 블로킹 큐
+  * 참고) 요청이 들어와야 스레드를 만든다.
+
+#### Runnable의 불편함
+* 반환 값이 없다.
+* 예외 처리가 힘들다.(checked exception을 던질 수 없다.)
