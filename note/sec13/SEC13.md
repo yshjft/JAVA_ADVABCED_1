@@ -2,8 +2,8 @@
 
 ## Executor 프레임워크 (1)
 
-### 스레드 직접 사용할 때의 문제점
 
+### 스레드 직접 사용할 때의 문제점
 #### 스레드 생성 비용으로 인한 문제
 * 필요할 때마 스레드를 만들어 사용하는 경우 스레드 생성하기 위한 비용을 매번 담당행야 한다.
 
@@ -20,7 +20,6 @@
   * 생산자 소비자 문제 해결
 
 ### ThreadPoolExecutor
-
 #### ThreadPoolExecutor
 * 생산자/소비자 패턴
   * 생산자: es.execute(작업) 를 호출하는 스레드
@@ -38,3 +37,35 @@
 #### Runnable의 불편함
 * 반환 값이 없다.
 * 예외 처리가 힘들다.(checked exception을 던질 수 없다.)
+
+
+### Future
+#### Callable
+```java
+package java.util.concurrent;
+
+public interface Callable<V> {
+ V call() throws Exception;
+}
+```
+* 반환 값이 존재하며 checked exception을 throw 할 수 있다.
+
+#### Callable 사용
+```java
+public static void main(String[] args) throws ExecutionException, InterruptedException {
+   ExecutorService es = Executors.newFixedThreadPool(1);
+   Future<Integer> future = es.submit(new MyCallable());
+   Integer result = future.get();
+   es.close();
+ }
+ 
+ static class MyCallable implements Callable<Integer> {
+   @Override
+   public Integer call() {
+     // ...
+   }
+ }
+```
+* es.submit()을 통해 스레드에 callable 작업을 전달
+* futrure.get()을 통해 callable이 반환한 결과 확인
+* 멀티스레드를 매우 편하게 사용 가능
