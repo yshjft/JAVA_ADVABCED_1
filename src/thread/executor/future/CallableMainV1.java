@@ -24,7 +24,7 @@ public class CallableMainV1 {
             int value = new Random().nextInt(10);
             log("create value = " + value);
             log("Callable 완료");
-            return value;
+            return (Integer) value;
         }
     }
 }

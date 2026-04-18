@@ -69,3 +69,46 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
 * es.submit()을 통해 스레드에 callable 작업을 전달
 * futrure.get()을 통해 callable이 반환한 결과 확인
 * 멀티스레드를 매우 편하게 사용 가능
+
+#### Future 분석
+* Future: 전달한 작업의 미래 결과를 담고 있다.
+* 실행 분석
+  ```java
+  Future<Integer> future = es.submit(new MyCallable())
+  ``` 
+    * ExecutorService에 Task(MyCallable)을 전달
+    * ExecutorService는 Future(FutureTask) 객체 생성
+    * 생성된 Future 객체 안에 Task 보관
+      * Future 내부에는 **Task의 작업 완료 여부** 와 **작업 결과 값** 을 가지고 있다.
+    * Future 객체는 블로킹 큐에 보관된다. 
+    * 요청 스레드에 Future 객체는 바로 반환된다.
+  
+  ```
+  ExecutorService(ThreadPoolExecutor)
+  
+  블로킹 큐에 있는 Task를 꺼냄
+   → 스레드 풀에 있는 스레드가 Task의 run() 호출
+   → run() 메서드가 Task의 call() 호출 
+  ```
+
+  ```java
+  Integer result = future.get();
+  ```
+    * 요청 스레드는 Fuutre.get()을 통하여 Task의 결과를 받아 볼 수 있다.
+    * 하지만 Task가 아직 완료되지 않을 수도 있다.
+      * 이런 경우 요청 스레드는 Task가 완료될 때까지 기다려야 한다.
+      * 요청 스레드의 상태: RUNNABLE → WAITING
+      * Future 완료
+        * 완료 여부: O
+        * 결과 값 존재
+      * Future 비완료
+        * 완료 여부: X
+        * 결과 값 NONE
+        * 요청 스레드 대기(Blocking)
+          * 참고) 블로킹 메서드: Thread.join, Future.get()
+    * Task가 완료되면
+      * 스레드는 Future의 Task의 반환 결과를 담고 완료 처리
+      * if 요청 스레드 대기) 
+        * 스레드(Task를 수행한 스레드)는 요청 스레드를 깨움 (WAITING → RUNNABLE)
+
+#### Future 왜 필요한가?
