@@ -112,3 +112,33 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
         * 스레드(Task를 수행한 스레드)는 요청 스레드를 깨움 (WAITING → RUNNABLE)
 
 #### Future 왜 필요한가?
+* Future 반환
+  ```java
+  Future<Integer> future1 = es.submit(task1); // 여기는 블로킹 아님
+  Future<Integer> future2 = es.submit(task2); // 여기는 블로킹 아님
+  
+  Integer sum1 = future1.get(); // 여기서 블로킹
+  Integer sum2 = future2.get(); // 여기서 블로킹
+  ```
+
+* Future를 반환하지 않는다면
+  ```java
+  Integer sum1 = es.submit(task1); // 여기서 블로킹
+  Integer sum2 = es.submit(task2); // 여기서 블로킹
+  ```
+  * 이러한 경우 멀티스레드를 제대로 활용하지 못하게 된다.
+
+#### Future의 잘못된 사용
+* 잘못된 사용 1
+  ```java
+  Future<Integer> future1 = es.submit(task1); // non-blocking
+  Integer sum1 = future1.get(); // blocking, 2초 대기
+  
+  Future<Integer> future2 = es.submit(task2); // non-blocking
+  Integer sum2 = future2.get(); // blocking, 2초 대기
+  ```
+* 잘못된 사용 2
+  ```java
+  Integer sum1 = es.submit(task1).get(); // get()에서 블로킹
+  Integer sum2 = es.submit(task2).get(); // get()에서 블로킹
+  ```
