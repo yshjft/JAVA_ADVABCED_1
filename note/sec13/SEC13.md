@@ -142,3 +142,28 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
   Integer sum1 = es.submit(task1).get(); // get()에서 블로킹
   Integer sum2 = es.submit(task2).get(); // get()에서 블로킹
   ```
+#### 주요 메서드
+* boolean cancel(boolean mayInterruptIfRunning)
+  * cancel(true) : Future 를 취소 상태로 변경한다. 이때 작업이 실행중이라면 Thread.interrupt() 를 호출해서 작업을 중단한다. 
+  * cancel(false) : Future 를 취소 상태로 변경한다. 단 이미 실행 중인 작업을 중단하지는 않는다.
+* boolean isCancelled()
+  * 작업 취소 여부 반환
+* boolean isDone()
+  * 작업 완료 여부 반환
+* State state()
+  * Future 의 상태를 반환한다. 자바 19부터 지원한다.
+    * RUNNING : 작업 실행 중 
+    * SUCCESS : 성공 완료 
+    * FAILED : 실패 완료 
+    * CANCELLED : 취소 완료
+* V get()
+  * 작업이 완료될 때까지 대기하고, 완료되면 결과를 반환한다.
+  * 예외
+    * InterruptedException : 대기 중에 현재 스레드가 인터럽트된 경우 발생 
+    * ExecutionException : 작업 계산 중에 예외가 발생한 경우 발생 (해당 예외는 실제 작업 중에 발생한 예외를 담고 있다)
+* V get(long timeout, TimeUnit unit)
+  * get() 과 같은데, 시간 초과되면 예외를 발생시킨다
+  * 예외
+    * InterruptedException : 대기 중에 현재 스레드가 인터럽트된 경우 발생 
+    * ExecutionException : 계산 중에 예외가 발생한 경우 발생 ( 해당 예외는 실제 작업 중에 발생한 예외를 담고 있다.)
+    * TimeoutException : 주어진 시간 내에 작업이 완료되지 않은 경우 발생
