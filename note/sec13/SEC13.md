@@ -167,3 +167,13 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
     * InterruptedException : 대기 중에 현재 스레드가 인터럽트된 경우 발생 
     * ExecutionException : 계산 중에 예외가 발생한 경우 발생 ( 해당 예외는 실제 작업 중에 발생한 예외를 담고 있다.)
     * TimeoutException : 주어진 시간 내에 작업이 완료되지 않은 경우 발생
+
+#### 작업 컬렉션 처리
+* ``` <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks) throws InterruptedException```
+  * 모든 Callable 작업을 제출하고, 모든 작업이 완료될 때까지 기다린다.
+* ``` <T> T invokeAny(Collection<? extends Callable<T>> tasks) throwsInterruptedException, ExecutionException```
+  * 하나의 Callable 작업이 완료될 때까지 기다리고, 가장 먼저 완료된 작업의 결과를 반환한다. 
+  *  완료되지 않은 나머지 작업은 취소한다.
+* ```<T> T invokeAny(Collection<? extends Callable<T>> tasks, long timeout,TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException```
+  * 지정된 시간 내에 하나의 Callable 작업이 완료될 때까지 기다리고, 가장 먼저 완료된 작업의 결과를 반환한다. 
+  * 완료되지 않은 나머지 작업은 취소한다.
