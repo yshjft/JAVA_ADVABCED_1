@@ -177,3 +177,10 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
 * ```<T> T invokeAny(Collection<? extends Callable<T>> tasks, long timeout,TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException```
   * 지정된 시간 내에 하나의 Callable 작업이 완료될 때까지 기다리고, 가장 먼저 완료된 작업의 결과를 반환한다. 
   * 완료되지 않은 나머지 작업은 취소한다.
+
+#### 참고
+* ExecutorService.submit() 에는 반환 결과가 있는 Callable 뿐만 아니라 반환 결과가 없는 Runnable 도 사용할 수 있다.
+  ```java
+  Future<?> future = executor.submit(new MyRunnable());
+  ```
+  * Runnable 은 반환 값이 없기 때문에 future.get() 을 호출할 경우 null 을 반환한다. 결과가 없다 뿐이지 나머지는 똑같다. 작업이 완료될 때 까지 요청 스레드가 블로킹 되는 부분도 같다.
