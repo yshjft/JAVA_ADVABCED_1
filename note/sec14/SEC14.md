@@ -61,3 +61,15 @@ static void shutdownAndAwaitTermination(ExecutorService es) {
   * hutdownNow() 가 작업 중인 스레드에 인터럽트를 호출하는 것은 맞으나 인터럽트를 호출하더라도 여러가지 이유로 작업에 시간이 걸릴 수 있기에 잠시 대기하는 것이다.
   * 최악의 경우 인터럽트를 받을 수 없는 코드를 수행 중이라면 인터럽트 예외가 발생하지 않고, 스레드도 계속 수행될 수 있다.
 * 서비스 종료시 기본적으로 우아한 종료를 선택하고, 우아한 종료가 되지 않으면 무한정 기다릴 수는 없으니, 그 다음으로 강제 종료를 하는 방식으로 접근하는 것이 좋다.
+
+### Executor 스레드 풀 관리
+#### 속성
+* corePoolSize
+  * 스레드 풀에서 관리되는 기본 스레드의 수
+* maximumPoolSize
+  * 스레드 풀에서 관리되는 최대 스레드 수
+  * 블로킹 큐가 꽉 찼을 때(급할 때), corePoolSize를 초과해서 maximumPoolSize까지 스레드를 추가(초과 스레드)로 만들어서 작업을 처리할 수 있다.
+* keepAliveTime , TimeUnit unit
+  * 기본 스레드 수를 초과해서 만들어진 초과 스레드가 생존할 수 있는 대기 시간, 이 시간 동안 처리할 작업이 없다면 초과 스레드는 제거된다.
+* BlockingQueue workQueue
+  * 작업을 보관할 블로킹 큐
