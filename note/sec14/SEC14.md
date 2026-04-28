@@ -73,3 +73,27 @@ static void shutdownAndAwaitTermination(ExecutorService es) {
   * 기본 스레드 수를 초과해서 만들어진 초과 스레드가 생존할 수 있는 대기 시간, 이 시간 동안 처리할 작업이 없다면 초과 스레드는 제거된다.
 * BlockingQueue workQueue
   * 작업을 보관할 블로킹 큐
+
+#### 스레드 미리 생성하기
+* 기본적으로 요청이 들어와야 스레드가 만들어진다.
+* 하지만 응답시간이 중요한 경우 스레드를 미리 만들어 놓는 것이 좋다.
+* ThreadPoolExecutor.prestartAllCoreThreads() 를 사용하면 기본 스레드를 미리 생성할 수 있다.
+
+#### Executor 전략 - 고정 풀 전략
+* newSingleThreadPool
+  ```java
+  new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>())
+  ```
+* 스레드 풀에 기본 스레드 1개만 사용한다. 
+* 큐 사이즈에 제한이 없다. ( LinkedBlockingQueue )
+* 주로 간단히 사용하거나, 테스트 용도로 사용한다.
+
+#### Executor 전략 - 고정 풀 전략
+* newFixedThreadPool(nThreads)
+  ```java
+  new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>())
+  ```
+* 스레드 풀에 nThreads 만큼의 기본 스레드를 생성한다. 초과 스레드는 생성하지 않는다.
+* 큐 사이즈에 제한이 없다. ( LinkedBlockingQueue )
+* 스레드 수가 고정되어 있기 때문에 CPU, 메모리 리소스가 어느정도 예측 가능한 안정적인 방식이다.
+* 그러나 사용자가 점진적으로 증가되거나, 갑작스럽게 요청이 증가하는 환경에서는 알맞은 방식은 아니다.
