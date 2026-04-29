@@ -97,3 +97,13 @@ static void shutdownAndAwaitTermination(ExecutorService es) {
 * 큐 사이즈에 제한이 없다. ( LinkedBlockingQueue )
 * 스레드 수가 고정되어 있기 때문에 CPU, 메모리 리소스가 어느정도 예측 가능한 안정적인 방식이다.
 * 그러나 사용자가 점진적으로 증가되거나, 갑작스럽게 요청이 증가하는 환경에서는 알맞은 방식은 아니다.
+
+#### Executor 전략 - 캐시 풀 전략
+* newCachedThreadPool()
+ ```java
+ new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+ ```
+* 기본 스레드를 사용하지 않고, 60초 생존 주기를 가진 초과 스레드만 사용한다.
+* 초과 스레드의 수에 제한이 없으며 큐에 작업을 저장하지 않는다.
+* 작업 수에 맞추어 스레드 수가 변하기 때문에, 작업의 처리 속도가 빠르고, CPU, 메모리를 매우 유연하게 사용할 수 있다.
+* 그러나 스레드 수가 너무 늘어나 시스템이 느려지거나 다운 될 수 있는 위험이 존재한다.
