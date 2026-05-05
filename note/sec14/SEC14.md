@@ -107,3 +107,17 @@ static void shutdownAndAwaitTermination(ExecutorService es) {
 * 초과 스레드의 수에 제한이 없으며 큐에 작업을 저장하지 않는다.
 * 작업 수에 맞추어 스레드 수가 변하기 때문에, 작업의 처리 속도가 빠르고, CPU, 메모리를 매우 유연하게 사용할 수 있다.
 * 그러나 스레드 수가 너무 늘어나 시스템이 느려지거나 다운 될 수 있는 위험이 존재한다.
+
+#### Executor 전략 - 사용자 정의 풀 전략
+* 고정 풀 또는 캐시 풀 전략이 문제가 되는 상황
+  * 점진적인 사용자 확대
+  * 갑작스러운 트래픽 증가
+* 사용자 정의 풀 전략은 위의 상황에 어느정도 대응 가능
+  * 일반: 고정 크기의 스레드로 서비스를 안정적으로 운영
+  * 긴급: 긴급하게 스레드를 추가로 투입해서 작업을 빠르게 처리
+  * 거절: 요청이 폭증해서 긴급 대응도 어렵다면 사용자의 요청을 거절
+```java
+ExecutorService es = new ThreadPoolExecutor(100, 200, 60, TimeUnit.SECONDS,
+new ArrayBlockingQueue<>(1000));
+```
+* 반드시 LinkedBlockingQueue의 사이즈를 설정해야 최대 사이즈 만큼 늘어날 수 있다.
