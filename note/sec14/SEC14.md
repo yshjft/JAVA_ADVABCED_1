@@ -121,3 +121,28 @@ ExecutorService es = new ThreadPoolExecutor(100, 200, 60, TimeUnit.SECONDS,
 new ArrayBlockingQueue<>(1000));
 ```
 * 반드시 LinkedBlockingQueue의 사이즈를 설정해야 최대 사이즈 만큼 늘어날 수 있다.
+
+#### Executor 예외 정책
+* AbortPolicy
+  ```java
+  new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadPoolExecutor.AbortPolicy());
+  new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS, new SynchronousQueue<>());
+  ```
+  * 새로운 작업을 제출할 때 RejectedExecutionException 을 발생시킨다.
+  * 기본 정책이다.
+* DiscardPolicy 
+  ```java
+  new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS,new SynchronousQueue<>(), new ThreadPoolExecutor.DiscardPolicy());
+  ```
+  * 새로운 작업을 조용히 버린다. (아무 예외도 발생시키지 않는다)
+* CallerRunsPolicy
+  ```java
+  new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
+  ```
+  * 새로운 작업을 제출한 스레드가 대신해서 직접 작업을 실행한다.
+  * 생산 속도를 조절할 수 있다.
+* 사용자 정의(RejectedExecutionHandler)
+  ```java
+  new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS, new SynchronousQueue<>(), new MyRejectedExecutionHandler());
+  ```
+  * 개발자가 직접 정의한 거절 정책을 사용할 수 있다.
