@@ -23,7 +23,7 @@
 * synchronized를 설정하면 하나의 스레드만 해당 부분을 실행할 수 있다.
 * 따라서 범위는 작게 잡아야 한다.
 * synchronized 코드 블럭은 그 범위를 작게 잡을 수 있는 방법이다.
-  * ```java synchronized (this) {}```
+  * ```synchronized (this) {}```
     * 괄호 안에 들어가는 값은 락을 획득할 인스턴스 참조이다.
 
 
